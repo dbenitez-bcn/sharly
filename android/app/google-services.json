@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "927575311002",
+    "project_id": "sharly-83c06",
+    "storage_bucket": "sharly-83c06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:927575311002:android:0b7f869f6d3a81eab21523",
+        "android_client_info": {
+          "package_name": "com.logicgear.sharlyapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "927575311002-nf6rpr37e2ajgl8s7avhqldpi6m8539p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.logicgear.sharlyapp",
+            "certificate_hash": "7d36a5b5c1fcd51e7cef480a61985596fad27406"
+          }
+        },
+        {
+          "client_id": "927575311002-985bilao0gm97d1jn6dfufq62n340trq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_1acKMxkVrVwbEmfrHESKYay7nc-2l8w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "927575311002-985bilao0gm97d1jn6dfufq62n340trq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
