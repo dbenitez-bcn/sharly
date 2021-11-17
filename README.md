@@ -1,4 +1,4 @@
-# sharlyapp
+# Sharly
 
 Listas de la compra compartidas.
 
