@@ -14,3 +14,12 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## Trouble shooting
+
+### iOS not working
+- Update your cocoapods to  to 1.9.1 or higher with `gem install cocoapods`
+- Delete `Podfile.lock`
+- Run `flutter pub get` in your terminal
+- Under ios folder run `Pod install`
+- Run the app in iOS
