@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>927575311002-u21ae0rkamqs31j2uf8027lg0fdlv7cp.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.927575311002-u21ae0rkamqs31j2uf8027lg0fdlv7cp</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>927575311002-nf6rpr37e2ajgl8s7avhqldpi6m8539p.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCZNJuOLhQRUi4M658wDNM1tuuENrDgRn8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>927575311002</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.logicgear.sharlyapp</string>
+	<key>PROJECT_ID</key>
+	<string>sharly-83c06</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sharly-83c06.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:927575311002:ios:beeb2411b83eb4f1b21523</string>
+</dict>
+</plist>
