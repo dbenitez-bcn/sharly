@@ -23,3 +23,6 @@ samples, guidance on mobile development, and a full API reference.
 - Run `flutter pub get` in your terminal
 - Under ios folder run `Pod install`
 - Run the app in iOS
+
+### Unit tests
+Before running unit test run dart run build_runner build` to autogenerate mocks
