@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:sharlyapp/presentation/pages/main_page.dart';
 
 void main() {
   runApp(Sharly());
@@ -23,7 +24,7 @@ class Sharly extends StatelessWidget {
             }
 
             if (snapshot.connectionState == ConnectionState.done) {
-              return const MyHomePage(title: 'Flutter Demo Home Page');
+              return MainPage();
             }
 
             return const Center(
