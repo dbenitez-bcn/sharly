@@ -6,7 +6,8 @@ import 'package:sharlyapp/domain/error/failures/sign_in_failure.dart';
 class AuthService {
   final UsersRepository _usersRepository;
 
-  AuthService(this._usersRepository);
+  AuthService(UsersRepository usersRepository)
+      : _usersRepository = usersRepository;
 
   Future<Either<SignInFailure, SharlyUser>> signIn() async {
     try {

@@ -6,8 +6,7 @@ import 'package:sharlyapp/domain/error/exeptions/sign_in_exception.dart';
 class FirebaseUsersRepository implements UsersRepository {
   final FirebaseAuth _firebase;
 
-
-  FirebaseUsersRepository(this._firebase);
+  FirebaseUsersRepository(FirebaseAuth firebase) : _firebase = firebase;
 
   @override
   Future<SharlyUserModel> getAnonymousUser() async {
@@ -17,5 +16,4 @@ class FirebaseUsersRepository implements UsersRepository {
     }
     return SharlyUserModel(credentials.user!.uid);
   }
-
 }
