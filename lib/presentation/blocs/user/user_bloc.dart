@@ -12,7 +12,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   UserBloc(AuthService service)
       : _service = service,
-        super(UserAuthFailed()) {
+        super(UserInitial()) {
     on<UserSignedIn>(_onSignIn);
   }
 
