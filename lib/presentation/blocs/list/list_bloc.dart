@@ -6,7 +6,7 @@ part 'list_event.dart';
 part 'list_state.dart';
 
 class ListBloc extends Bloc<ListEvent, ListState> {
-  ListBloc(ListState initialState) : super(initialState) {
+  ListBloc() : super(const ListInitState()) {
     on<ListChangedEvent>((event, emit) {
       emit(ListSelectSuccess(event.selectedList));
     });

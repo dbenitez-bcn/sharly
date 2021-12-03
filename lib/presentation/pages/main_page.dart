@@ -13,19 +13,25 @@ class MainPage extends StatelessWidget {
       ),
       body: BlocBuilder<ListBloc, ListState>(
         builder: (context, state) {
-          return StreamBuilder<SharlyList>(
-            stream: FirebaseFirestore.instance
-                .collection("lists")
-                .doc((state as ListSelectSuccess).currentList.id)
-                .snapshots()
-                .map((event) => SharlyList.fromMap(event.data()!)),
-            builder: (context, AsyncSnapshot<SharlyList> snapshot) {
-              if (snapshot.hasData) {
-                return Text(snapshot.data!.title);
-              }
-              return Text("Error de conexion.");
-            },
-          );
+          if (state is ListSelectSuccess) {
+            return StreamBuilder<SharlyList>(
+              stream: FirebaseFirestore.instance
+                  .collection("lists")
+                  .doc(state.currentList.id)
+                  .snapshots()
+                  .map((event) => SharlyList.fromMap(event.data()!)),
+              builder: (context, AsyncSnapshot<SharlyList> snapshot) {
+                if (snapshot.hasData) {
+                  // TODO Add products list
+                  return Text(snapshot.data!.title);
+                }
+                return Text("Error de conexion.");
+              },
+            );
+          }
+          else {
+            return Container();
+          }
         },
       ),
       floatingActionButton: FloatingActionButton(

@@ -58,17 +58,16 @@ class Sharly extends StatelessWidget {
           .collection("shared_lists")
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .get(),
-      builder: (_, snapshot) {
+      builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return _loaderIndicator();
         } else if (snapshot.hasError) {
           return _message("No pudimos iniciar la Sharly...");
         } else {
-          SharedList list = SharedList(snapshot.data!.data()!["lists"].first as String);
-          return BlocProvider(
-            create: (_) => ListBloc(ListSelectSuccess(list)),
-            child: child,
-          );
+          SharedList list =
+              SharedList(snapshot.data!.data()!["lists"].first as String);
+          context.read<ListBloc>().add(ListChangedEvent(list));
+          return child;
         }
       },
     );
@@ -76,28 +75,31 @@ class Sharly extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-      ),
-      routes: <String, WidgetBuilder>{
-        '/newProduct': (BuildContext context) => NewProductPage(),
-      },
-      home: FutureBuilder<void>(
-        future: _initializeApp(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return _loaderIndicator();
-          } else if (snapshot.hasError ||
-              FirebaseAuth.instance.currentUser == null) {
-            return _message("No pudimos iniciar la Sharly.");
-          } else {
-            return _initializeBloc(
-              child: MainPage(),
-            );
-          }
+    return BlocProvider(
+      create: (_) => ListBloc(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.teal,
+        ),
+        routes: <String, WidgetBuilder>{
+          '/newProduct': (BuildContext context) => NewProductPage(),
         },
+        home: FutureBuilder<void>(
+          future: _initializeApp(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return _loaderIndicator();
+            } else if (snapshot.hasError ||
+                FirebaseAuth.instance.currentUser == null) {
+              return _message("No pudimos iniciar la Sharly.");
+            } else {
+              return _initializeBloc(
+                child: MainPage(),
+              );
+            }
+          },
+        ),
       ),
     );
   }

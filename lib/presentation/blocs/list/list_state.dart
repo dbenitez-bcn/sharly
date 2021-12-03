@@ -4,6 +4,14 @@ abstract class ListState extends Equatable {
   const ListState();
 }
 
+class ListInitState extends ListState {
+
+  const ListInitState();
+
+  @override
+  List<Object> get props => [];
+}
+
 class ListSelectSuccess extends ListState {
   final SharedList currentList;
 
