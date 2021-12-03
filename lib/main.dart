@@ -2,6 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sharlyapp/domain/valueObjects/shared_list.dart';
+import 'package:sharlyapp/presentation/blocs/list/list_bloc.dart';
+import 'package:sharlyapp/presentation/pages/main_page.dart';
+import 'package:sharlyapp/presentation/pages/new_product_page.dart';
 
 void main() {
   runApp(Sharly());
@@ -15,26 +20,57 @@ class Sharly extends StatelessWidget {
 
   Future<void> _initSession({required Function(String uid) ifNew}) async {
     if (FirebaseAuth.instance.currentUser == null) {
-      UserCredential userCredentials = await FirebaseAuth.instance.signInAnonymously();
-      if (userCredentials.additionalUserInfo!.isNewUser) await ifNew(userCredentials.user!.uid);
+      UserCredential userCredentials =
+          await FirebaseAuth.instance.signInAnonymously();
+      if (userCredentials.additionalUserInfo!.isNewUser) {
+        await ifNew(userCredentials.user!.uid);
+      }
     }
   }
-  
+
   Future<void> _createDefaultList(String uid) async {
-    DocumentReference defaultList = await FirebaseFirestore.instance.collection("lists").add({
-      "title": "Lista de la compra",
-      "products": []
-    });
+    DocumentReference defaultList = await FirebaseFirestore.instance
+        .collection("lists")
+        .add({"title": "Lista de la compra", "products": []});
     await FirebaseFirestore.instance.collection("shared_lists").doc(uid).set({
       "lists": [defaultList.id]
     });
   }
-  
+
   Widget _message(String message) {
     return Scaffold(
       body: Center(
         child: Text(message),
       ),
+    );
+  }
+
+  Widget _loaderIndicator() {
+    // TODO: Add splash screen to load
+    return const Scaffold(
+      body: Center(child: CircularProgressIndicator.adaptive()),
+    );
+  }
+
+  Widget _initializeBloc({required Widget child}) {
+    return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+      future: FirebaseFirestore.instance
+          .collection("shared_lists")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get(),
+      builder: (_, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return _loaderIndicator();
+        } else if (snapshot.hasError) {
+          return _message("No pudimos iniciar la Sharly...");
+        } else {
+          SharedList list = SharedList(snapshot.data!.data()!["lists"].first as String);
+          return BlocProvider(
+            create: (_) => ListBloc(ListSelectSuccess(list)),
+            child: child,
+          );
+        }
+      },
     );
   }
 
@@ -45,59 +81,24 @@ class Sharly extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
+      routes: <String, WidgetBuilder>{
+        '/newProduct': (BuildContext context) => NewProductPage(),
+      },
       home: FutureBuilder<void>(
-          future: _initializeApp(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              // TODO: Add splash screen to load
-              return const Scaffold(
-                body: Center(child: CircularProgressIndicator.adaptive()),
-              );
-            } else if (snapshot.hasError ||
-                FirebaseAuth.instance.currentUser == null) {
-              return _message("No pudimos iniciar la Sharly...");
-            } else {
-              return _message(FirebaseAuth.instance.currentUser!.uid);
-            }
-          }),
+        future: _initializeApp(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return _loaderIndicator();
+          } else if (snapshot.hasError ||
+              FirebaseAuth.instance.currentUser == null) {
+            return _message("No pudimos iniciar la Sharly.");
+          } else {
+            return _initializeBloc(
+              child: MainPage(),
+            );
+          }
+        },
+      ),
     );
   }
-
-// Widget _initializeApp({required Widget child}) {
-//   return FutureBuilder(
-//     future: Firebase.initializeApp(),
-//     builder: (context, snapshot) {
-//       if (snapshot.hasError) {
-//         return _message("No pudimos iniciar la Sharly...");
-//       } else if (snapshot.connectionState == ConnectionState.done) {
-//         return _initializeBloc(child);
-//       }
-//
-//       return const Center(
-//         child: CircularProgressIndicator.adaptive(),
-//       );
-//     },
-//   );
-// }
-//
-// Widget _initializeBloc(Widget child) {
-//   return BlocProvider(
-//     create: (_) =>
-//         UserBloc(AuthService(FirebaseUsersRepository(FirebaseAuth.instance))),
-//     child: BlocBuilder<UserBloc, UserState>(
-//       builder: (context, state) {
-//         if (state is UserAuthSuccess) {
-//           return child;
-//         } else if (state is UserAuthInProgress) {
-//           return const CircularProgressIndicator.adaptive();
-//         } else if (state is UserInitial) {
-//           context.read<UserBloc>().add(UserSignedIn());
-//           return const SizedBox(width: 10, height: 10);
-//         } else {
-//           return _message("Es tu problemo");
-//         }
-//       },
-//     ),
-//   );
-// }
 }

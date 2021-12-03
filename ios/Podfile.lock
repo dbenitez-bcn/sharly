@@ -1,9 +1,16 @@
 PODS:
+  - cloud_firestore (3.1.0):
+    - Firebase/Firestore (= 8.9.0)
+    - firebase_core
+    - Flutter
   - Firebase/Auth (8.9.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 8.9.0)
   - Firebase/CoreOnly (8.9.0):
     - FirebaseCore (= 8.9.0)
+  - Firebase/Firestore (8.9.0):
+    - Firebase/CoreOnly
+    - FirebaseFirestore (~> 8.9.0)
   - firebase_auth (3.2.0):
     - Firebase/Auth (= 8.9.0)
     - firebase_core
@@ -62,6 +69,7 @@ PODS:
   - PromisesObjC (2.0.0)
 
 DEPENDENCIES:
+  - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `8.9.0`)
@@ -80,6 +88,8 @@ SPEC REPOS:
     - PromisesObjC
 
 EXTERNAL SOURCES:
+  cloud_firestore:
+    :path: ".symlinks/plugins/cloud_firestore/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -96,6 +106,7 @@ CHECKOUT OPTIONS:
     :tag: 8.9.0
 
 SPEC CHECKSUMS:
+  cloud_firestore: 2cff0618e560f435fc05da5c94c2d213eb7ba640
   Firebase: 13d8d96499e2635428d5bf0ec675df21f95d9a95
   firebase_auth: 0d56cc4d105ff70d1547a7fcb10ee574ad05adf5
   firebase_core: f770e033e790657b3505f04be4cb24c482912f11
