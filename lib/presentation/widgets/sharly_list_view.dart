@@ -45,6 +45,11 @@ class SharlyListView extends StatelessWidget {
         ),
         onDismissed: (_) {
           context.read<ListBloc>().removeProduct(products[index].id);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Se ha eliminado ${products[index].title} de la lista."),
+            ),
+          );
         },
         background: Container(
           color: Colors.red[700],
