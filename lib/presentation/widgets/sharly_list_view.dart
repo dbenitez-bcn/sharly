@@ -40,6 +40,7 @@ class SharlyListView extends StatelessWidget {
     return ListView.separated(
       itemBuilder: (context, index) => Dismissible(
         key: Key(products[index].id),
+        direction: DismissDirection.endToStart,
         child: ListTile(
           title: Text(products[index].title),
         ),
@@ -47,11 +48,23 @@ class SharlyListView extends StatelessWidget {
           context.read<ListBloc>().removeProduct(products[index].id);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text("Se ha eliminado ${products[index].title} de la lista."),
+              content:
+                  Text("Se ha eliminado ${products[index].title} de la lista."),
             ),
           );
         },
         background: Container(
+          child: const Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Icon(
+                Icons.delete,
+                color: Colors.white,
+                size: 24.0,
+              ),
+            ),
+          ),
           color: Colors.red[700],
         ),
       ),
