@@ -6,6 +6,22 @@ import 'package:sharlyapp/presentation/blocs/list/list_bloc.dart';
 class NewProductPage extends StatelessWidget {
   final TextEditingController _titleTextField = TextEditingController();
 
+  void _addProduct(BuildContext context) {
+    final id = (BlocProvider.of<ListBloc>(context).state
+    as ListSelectSuccess)
+        .currentList
+        .id;
+    FirebaseFirestore.instance
+        .collection("lists")
+        .doc(id)
+        .update({
+      "products": FieldValue.arrayUnion([
+        {"title": _titleTextField.value.text}
+      ])
+    });
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +34,10 @@ class NewProductPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: TextField(
                 controller: _titleTextField,
-                decoration: const InputDecoration(labelText: "Producto"),
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Producto",
+                ),
               ),
             ),
             ValueListenableBuilder<TextEditingValue>(
@@ -26,21 +45,7 @@ class NewProductPage extends StatelessWidget {
               builder: (context, value, child) {
                 return ElevatedButton(
                   onPressed: value.text.isNotEmpty
-                      ? () {
-                          final id = (BlocProvider.of<ListBloc>(context).state
-                                  as ListSelectSuccess)
-                              .currentList
-                              .id;
-                          FirebaseFirestore.instance
-                              .collection("lists")
-                              .doc(id)
-                              .update({
-                            "products": FieldValue.arrayUnion([
-                              {"title": _titleTextField.value.text}
-                            ])
-                          });
-                          Navigator.pop(context);
-                        }
+                      ? () => _addProduct(context)
                       : null,
                   child: const Text("Añadir"),
                 );
