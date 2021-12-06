@@ -42,5 +42,5 @@ class ListBloc extends Bloc<ListEvent, ListState> {
   }
 
   Product _mapToProduct(QueryDocumentSnapshot<Map<String, dynamic>> e) =>
-      Product.fromMap(e.data());
+      Product.fromMap(e.id, e.data());
 }
