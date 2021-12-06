@@ -30,17 +30,26 @@ class SharlyListView extends StatelessWidget {
       }
       return const EmptyList();
     } else if (snapshot.hasError) {
-      return const Text(
-          "Error de conexion. Por favor, intentalo más tarde");
+      return const Text("Error de conexion. Por favor, intentalo más tarde");
     } else {
       return Container();
     }
   }
-  
+
   Widget _buildList(List<Product> products) {
     return ListView.separated(
-      itemBuilder: (context, index) =>
-          ListTile(title: Text(products[index].title)),
+      itemBuilder: (context, index) => Dismissible(
+        key: Key(products[index].id),
+        child: ListTile(
+          title: Text(products[index].title),
+        ),
+        onDismissed: (_) {
+          context.read<ListBloc>().removeProduct(products[index].id);
+        },
+        background: Container(
+          color: Colors.red[700],
+        ),
+      ),
       separatorBuilder: (context, index) => const Padding(
         padding: EdgeInsets.symmetric(horizontal: 8.0),
         child: Divider(),
