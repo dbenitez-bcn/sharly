@@ -12,7 +12,10 @@ class NewProductPage extends StatelessWidget {
         .id;
     FirebaseFirestore.instance.collection("lists").doc(id).update({
       "products": FieldValue.arrayUnion([
-        {"title": _titleTextField.value.text, "created_at": DateTime.now()}
+        {
+          "title": _titleTextField.value.text,
+          "created_at": DateTime.now(),
+        }
       ])
     });
     Navigator.pop(context);
