@@ -24,6 +24,15 @@ class ListBloc extends Bloc<ListEvent, ListState> {
     }
   }
 
+  void removeProduct(String documentId) {
+      String id = (state as ListSelectSuccess).currentList.id;
+      FirebaseFirestore
+          .instance
+          .collection("lists/$id/products")
+          .doc(documentId)
+          .delete();
+  }
+
   Stream<List<Product>> getProducts() {
     String id = (state as ListSelectSuccess).currentList.id;
     return FirebaseFirestore.instance
