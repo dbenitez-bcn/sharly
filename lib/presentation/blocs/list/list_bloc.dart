@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:sharlyapp/domain/valueObjects/product.dart';
 import 'package:sharlyapp/domain/valueObjects/shared_list.dart';
 
 part 'list_event.dart';
@@ -22,4 +23,15 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       });
     }
   }
+
+  Stream<List<Product>> getProducts() {
+    String id = (state as ListSelectSuccess).currentList.id;
+    return FirebaseFirestore.instance
+        .collection("lists/$id/products")
+        .snapshots()
+        .map((event) => event.docs.map(_mapToProduct).toList());
+  }
+
+  Product _mapToProduct(QueryDocumentSnapshot<Map<String, dynamic>> e) =>
+      Product.fromMap(e.data());
 }
