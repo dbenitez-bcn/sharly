@@ -7,16 +7,12 @@ class NewProductPage extends StatelessWidget {
   final TextEditingController _titleTextField = TextEditingController();
 
   void _addProduct(BuildContext context) {
-    final id = (BlocProvider.of<ListBloc>(context).state
-    as ListSelectSuccess)
+    final id = (BlocProvider.of<ListBloc>(context).state as ListSelectSuccess)
         .currentList
         .id;
-    FirebaseFirestore.instance
-        .collection("lists")
-        .doc(id)
-        .update({
+    FirebaseFirestore.instance.collection("lists").doc(id).update({
       "products": FieldValue.arrayUnion([
-        {"title": _titleTextField.value.text}
+        {"title": _titleTextField.value.text, "created_at": DateTime.now()}
       ])
     });
     Navigator.pop(context);
@@ -44,9 +40,8 @@ class NewProductPage extends StatelessWidget {
               valueListenable: _titleTextField,
               builder: (context, value, child) {
                 return ElevatedButton(
-                  onPressed: value.text.isNotEmpty
-                      ? () => _addProduct(context)
-                      : null,
+                  onPressed:
+                      value.text.isNotEmpty ? () => _addProduct(context) : null,
                   child: const Text("Añadir"),
                 );
               },
