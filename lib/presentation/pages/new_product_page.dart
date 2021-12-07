@@ -5,6 +5,8 @@ import 'package:sharlyapp/presentation/blocs/list/list_bloc.dart';
 class NewProductPage extends StatelessWidget {
   final TextEditingController _titleTextField = TextEditingController();
 
+  NewProductPage({Key? key}) : super(key: key);
+
   void _addProduct(BuildContext context) {
     context.read<ListBloc>().addProduct( _titleTextField.value.text);
     Navigator.pop(context);
