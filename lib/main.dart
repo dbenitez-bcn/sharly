@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:sharlyapp/domain/valueObjects/shared_list.dart';
 import 'package:sharlyapp/presentation/blocs/list/list_bloc.dart';
 import 'package:sharlyapp/presentation/pages/main_page.dart';
@@ -49,6 +50,7 @@ class Sharly extends StatelessWidget {
   Future<void> _initializeApp() async {
     await Firebase.initializeApp();
     await _initSession(ifNew: _createDefaultList);
+    await MobileAds.instance.initialize();
   }
 
   Future<void> _initSession({required Function(String uid) ifNew}) async {
