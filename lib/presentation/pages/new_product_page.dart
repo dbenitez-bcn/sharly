@@ -24,6 +24,7 @@ class NewProductPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 12.0),
               child: TextField(
                 controller: _titleTextField,
+                textCapitalization: TextCapitalization.sentences,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "Producto",
