@@ -7,5 +7,7 @@ Future<void> main() async  {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await MobileAds.instance.initialize();
+  // TODO: Add test devices ids
+  // MobileAds.instance.updateRequestConfiguration(RequestConfiguration(testDeviceIds: []));
   runApp(const Sharly());
 }
