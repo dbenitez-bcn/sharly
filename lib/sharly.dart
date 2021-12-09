@@ -58,7 +58,7 @@ class Sharly extends StatelessWidget {
     if (FirebaseAuth.instance.currentUser == null) {
       UserCredential userCredentials =
           await FirebaseAuth.instance.signInAnonymously();
-      if (userCredentials.additionalUserInfo!.isNewUser) {
+      if (userCredentials.additionalUserInfo != null && userCredentials.additionalUserInfo!.isNewUser) {
         await ifNew(userCredentials.user!.uid);
       }
     }
