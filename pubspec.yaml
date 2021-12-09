@@ -45,6 +45,8 @@ dependencies:
   google_mobile_ads: ^0.13.3
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
   mockito: ^5.0.16

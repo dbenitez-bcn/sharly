@@ -32,7 +32,7 @@ class SharlyListView extends StatelessWidget {
     } else if (snapshot.hasError) {
       return const Text("Error de conexion. Por favor, intentalo más tarde");
     } else {
-      return Container();
+      return const Center(child: CircularProgressIndicator.adaptive());
     }
   }
 

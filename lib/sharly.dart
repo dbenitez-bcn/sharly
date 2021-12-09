@@ -66,6 +66,7 @@ class Sharly extends StatelessWidget {
   }
 
   Future<void> _createDefaultList(String uid) async {
+    // TODO: Move this to bloc
     DocumentReference defaultList = await FirebaseFirestore.instance
         .collection("lists")
         .add({"title": "Lista de la compra"});
