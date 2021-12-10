@@ -6,8 +6,7 @@ import 'package:sharlyapp/main_dev.dart' as app;
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('tap on the floating action button, verify counter',
-      (WidgetTester tester) async {
+  testWidgets('User flow', (WidgetTester tester) async {
     // Init app
     await app.main();
     await tester.pumpAndSettle();
