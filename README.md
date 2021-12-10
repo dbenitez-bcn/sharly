@@ -9,6 +9,11 @@ Listas de la compra compartidas.
 - Under root folder run `firebase emulators:start`
 - Run your app in dev mode using `main_dev.dart` as target
 
+### Run integration tests
+- Install firebase tools `npm install -g firebase-tools`
+- Under root folder run `firebase emulators:start`
+- Run `flutter test integration_test/app_test.dart`
+
 ## Trouble shooting
 
 ### iOS not working
