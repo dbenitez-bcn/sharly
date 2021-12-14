@@ -16,6 +16,7 @@ class Sharly extends StatelessWidget {
     return BlocProvider(
       create: (_) => listBloc,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Sharly',
         theme: ThemeData(
           primarySwatch: Colors.teal,
@@ -47,7 +48,8 @@ class Sharly extends StatelessWidget {
   }
 
   Future<SharedList> _getListByUserId(String uid) async {
-    DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+        .instance
         .collection("shared_lists")
         .doc(uid)
         .get();
@@ -58,7 +60,8 @@ class Sharly extends StatelessWidget {
     if (FirebaseAuth.instance.currentUser == null) {
       UserCredential userCredentials =
           await FirebaseAuth.instance.signInAnonymously();
-      if (userCredentials.additionalUserInfo != null && userCredentials.additionalUserInfo!.isNewUser) {
+      if (userCredentials.additionalUserInfo != null &&
+          userCredentials.additionalUserInfo!.isNewUser) {
         await ifNew(userCredentials.user!.uid);
       }
     }
@@ -67,9 +70,11 @@ class Sharly extends StatelessWidget {
 
   Future<void> _createDefaultList(String uid) async {
     // TODO: Move this to bloc
-    DocumentReference defaultList = await FirebaseFirestore.instance
-        .collection("lists")
-        .add({"title": "Lista de la compra"});
+    DocumentReference defaultList =
+        await FirebaseFirestore.instance.collection("lists").add({
+      "title": "Lista de la compra",
+      "created_at": FieldValue.serverTimestamp(),
+    });
     await FirebaseFirestore.instance.collection("shared_lists").doc(uid).set({
       "lists": [defaultList.id]
     });
