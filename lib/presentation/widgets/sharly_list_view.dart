@@ -38,7 +38,7 @@ class SharlyListView extends StatelessWidget {
   }
 
   Widget _buildList(List<Product> products) {
-    return ListView.separated(
+    return ListView.builder(
       itemBuilder: (context, index) => Dismissible(
         key: Key(products[index].id),
         direction: DismissDirection.endToStart,
@@ -66,10 +66,6 @@ class SharlyListView extends StatelessWidget {
           ),
           color: Colors.red[700],
         ),
-      ),
-      separatorBuilder: (context, index) => const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.0),
-        child: Divider(),
       ),
       itemCount: products.length,
     );
