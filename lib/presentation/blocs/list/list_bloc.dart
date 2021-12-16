@@ -19,6 +19,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       String id = (state as ListSelectSuccess).currentList.id;
       FirebaseFirestore.instance.collection("lists/$id/products").add({
         "title": title,
+        "quantity": 1,
         "created_at": FieldValue.serverTimestamp(),
       });
     }
