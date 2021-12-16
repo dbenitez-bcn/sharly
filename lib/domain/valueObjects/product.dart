@@ -1,7 +1,7 @@
 class Product {
   final String id;
-  final String title;
-  final int quantity;
+  String title;
+  int quantity;
 
   //Product(this.id, this.title);
 

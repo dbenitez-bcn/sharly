@@ -24,6 +24,16 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       });
     }
   }
+
+  void updateProduct(Product product) async {
+    if (state is ListSelectSuccess) {
+      String listId = (state as ListSelectSuccess).currentList.id;
+      await FirebaseFirestore.instance.doc("lists/$listId/products/${product.id}").update({
+        "title": product.title,
+        "quantity": product.quantity,
+      });
+    }
+  }
   
   void increaseQuantity(Product product) async {
     if (state is ListSelectSuccess) {
