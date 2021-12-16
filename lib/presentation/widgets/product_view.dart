@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharlyapp/domain/valueObjects/product.dart';
+import 'package:sharlyapp/presentation/blocs/list/list_bloc.dart';
 
 class ProductView extends StatelessWidget {
   final Product _product;
@@ -16,9 +18,8 @@ class ProductView extends StatelessWidget {
           borderRadius: BorderRadius.circular(5.0),
         ),
         child: ListTile(
-/*          onTap: () =>
-              record.reference.updateData({'quantity': record.quantity + 1}),
-          onLongPress: () {
+       onTap: () => BlocProvider.of<ListBloc>(context).increaseQuantity(_product),
+/*             onLongPress: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
