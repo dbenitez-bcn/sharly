@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharlyapp/domain/valueObjects/product.dart';
 import 'package:sharlyapp/presentation/blocs/list/list_bloc.dart';
 import 'package:sharlyapp/presentation/widgets/empty_list.dart';
+import 'package:sharlyapp/presentation/widgets/product_view.dart';
 
 class SharlyListView extends StatelessWidget {
   const SharlyListView({Key? key}) : super(key: key);
@@ -41,9 +42,7 @@ class SharlyListView extends StatelessWidget {
       itemBuilder: (context, index) => Dismissible(
         key: Key(products[index].id),
         direction: DismissDirection.endToStart,
-        child: ListTile(
-          title: Text(products[index].title),
-        ),
+        child: ProductView(products[index]),
         onDismissed: (_) {
           context.read<ListBloc>().removeProduct(products[index].id);
           ScaffoldMessenger.of(context).showSnackBar(
