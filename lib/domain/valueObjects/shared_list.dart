@@ -1,5 +1,6 @@
 class SharedList {
   final String id;
+  final String title;
 
-  SharedList(this.id);
+  SharedList(this.id, this.title);
 }

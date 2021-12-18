@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +30,7 @@ class Sharly extends StatelessWidget {
               return _loaderIndicator();
             } else if (snapshot.hasError ||
                 FirebaseAuth.instance.currentUser == null) {
+              print(snapshot.error!);
               return _message("No pudimos iniciar la Sharly.");
             } else {
               return const MainPage();
@@ -42,42 +42,21 @@ class Sharly extends StatelessWidget {
   }
 
   Future<void> _initializeApp(ListBloc listBloc) async {
-    User user = await _initSession(ifNew: _createDefaultList);
-    SharedList list = await _getListByUserId(user.uid);
-    listBloc.add(ListChangedEvent(list));
+    User user = await _initSession(ifNew: listBloc.addList);
+    List<SharedList> list = await listBloc.getListsByUserId(user.uid);
+    listBloc.add(ListChangedEvent(list.first));
   }
 
-  Future<SharedList> _getListByUserId(String uid) async {
-    DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
-        .instance
-        .collection("shared_lists")
-        .doc(uid)
-        .get();
-    return SharedList(snapshot.data()!["lists"].first as String);
-  }
-
-  Future<User> _initSession({required Function(String uid) ifNew}) async {
+  Future<User> _initSession({required Function(String uid, String title) ifNew}) async {
     if (FirebaseAuth.instance.currentUser == null) {
       UserCredential userCredentials =
           await FirebaseAuth.instance.signInAnonymously();
       if (userCredentials.additionalUserInfo != null &&
           userCredentials.additionalUserInfo!.isNewUser) {
-        await ifNew(userCredentials.user!.uid);
+        await ifNew(userCredentials.user!.uid, "Lista de la compra");
       }
     }
     return FirebaseAuth.instance.currentUser!;
-  }
-
-  Future<void> _createDefaultList(String uid) async {
-    // TODO: Move this to bloc
-    DocumentReference defaultList =
-        await FirebaseFirestore.instance.collection("lists").add({
-      "title": "Lista de la compra",
-      "created_at": FieldValue.serverTimestamp(),
-    });
-    await FirebaseFirestore.instance.collection("shared_lists").doc(uid).set({
-      "lists": [defaultList.id]
-    });
   }
 
   Widget _message(String message) {
