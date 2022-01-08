@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:sharlyapp/presentation/widgets/sharly_drawer.dart';
 import 'package:sharlyapp/presentation/widgets/sharly_list_view.dart';
 import 'package:sharlyapp/utils/ad_helper.dart';
 
@@ -21,6 +22,7 @@ class _MainPageState extends State<MainPage> {
         title: const Text("Sharly"),
       ),
       body: const SharlyListView(),
+      drawer: const SharlyDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, '/newProduct'),
         child: const Icon(Icons.add),

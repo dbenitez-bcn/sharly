@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sharlyapp/domain/valueObjects/shared_list.dart';
 import 'package:sharlyapp/presentation/blocs/list/list_bloc.dart';
 import 'package:sharlyapp/presentation/pages/main_page.dart';
+import 'package:sharlyapp/presentation/pages/new_list_page.dart';
 import 'package:sharlyapp/presentation/pages/new_product_page.dart';
 
 class Sharly extends StatelessWidget {
@@ -22,6 +23,7 @@ class Sharly extends StatelessWidget {
         ),
         routes: <String, WidgetBuilder>{
           '/newProduct': (BuildContext context) => NewProductPage(),
+          '/newList': (BuildContext context) => NewListPage(),
         },
         home: FutureBuilder<void>(
           future: _initializeApp(listBloc),

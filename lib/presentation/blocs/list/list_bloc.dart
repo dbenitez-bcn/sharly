@@ -15,14 +15,16 @@ class ListBloc extends Bloc<ListEvent, ListState> {
   }
 
   Future<void> addList(String uid, String title) async {
-    DocumentReference defaultList =
+    DocumentReference newList =
         await FirebaseFirestore.instance.collection("lists").add({
       "title": title,
       "created_at": FieldValue.serverTimestamp(),
     });
     await FirebaseFirestore.instance.collection("shared_lists").doc(uid).set({
-      "lists": FieldValue.arrayUnion([defaultList.id])
+      "lists": FieldValue.arrayUnion([newList.id])
     });
+
+    add(ListChangedEvent(await _getSharedListById(newList.id)));
   }
 
   void addProduct(String title) {
